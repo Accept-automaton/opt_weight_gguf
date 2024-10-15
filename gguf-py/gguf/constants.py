@@ -98,6 +98,7 @@ class MODEL_ARCH(IntEnum):
     BLOOM     = auto()
     STABLELM  = auto()
     BAMBOO      = auto()
+    OPT = auto()
 
 
 class MODEL_TENSOR(IntEnum):
@@ -125,6 +126,8 @@ class MODEL_TENSOR(IntEnum):
     FFN_DOWN_T      = auto()
     FC_1            = auto()
     FC_2            = auto()
+    PROJECT_IN = auto()
+    PROJECT_OUT = auto()
 
 
 
@@ -143,6 +146,7 @@ MODEL_ARCH_NAMES: dict[MODEL_ARCH, str] = {
     MODEL_ARCH.BLOOM:          "bloom",
     MODEL_ARCH.STABLELM:       "stablelm",
     MODEL_ARCH.BAMBOO:         "bamboo",
+    MODEL_ARCH.OPT:            "opt",
 }
 
 TENSOR_NAMES: dict[MODEL_TENSOR, str] = {
@@ -170,6 +174,8 @@ TENSOR_NAMES: dict[MODEL_TENSOR, str] = {
     MODEL_TENSOR.FFN_DOWN_T:      "blk.{bid}.ffn_down_t",
     MODEL_TENSOR.FC_1:            "blk.{bid}.fc1",
     MODEL_TENSOR.FC_2:            "blk.{bid}.fc2",
+    MODEL_TENSOR.PROJECT_IN:      "project_in",
+    MODEL_TENSOR.PROJECT_OUT:     "project_out",
 }
 
 MODEL_TENSORS: dict[MODEL_ARCH, list[MODEL_TENSOR]] = {
@@ -357,6 +363,22 @@ MODEL_TENSORS: dict[MODEL_ARCH, list[MODEL_TENSOR]] = {
         # TODO
     ],
     # TODO
+    MODEL_ARCH.OPT: [
+        MODEL_TENSOR.TOKEN_EMBD,
+        MODEL_TENSOR.POS_EMBD,
+        MODEL_TENSOR.OUTPUT_NORM,
+        MODEL_TENSOR.OUTPUT,
+        MODEL_TENSOR.PROJECT_IN,
+        MODEL_TENSOR.PROJECT_OUT,
+        MODEL_TENSOR.ATTN_Q,
+        MODEL_TENSOR.ATTN_K,
+        MODEL_TENSOR.ATTN_V,
+        MODEL_TENSOR.ATTN_OUT,
+        MODEL_TENSOR.ATTN_NORM,
+        MODEL_TENSOR.FC_1,
+        MODEL_TENSOR.FC_2,
+        MODEL_TENSOR.FFN_NORM,
+    ]
 }
 
 # tensors that will not be serialized
