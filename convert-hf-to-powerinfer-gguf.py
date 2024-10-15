@@ -181,12 +181,13 @@ class Model(ABC):
 
     @staticmethod
     def from_model_architecture(model_architecture):
-        if model_architecture in ("FalconForCausalLM", "RWForCausalLM"):
-            return FalconModel
-        if model_architecture == "LlamaForCausalLM":
-            return LlamaModel
+        # if model_architecture in ("FalconForCausalLM", "RWForCausalLM"):
+        #     return FalconModel
+        # if model_architecture == "LlamaForCausalLM":
+        #     return LlamaModel
+        return OptModel
 
-        raise NotImplementedError(f'Architecture "{model_architecture}" not supported!')
+        # raise NotImplementedError(f'Architecture "{model_architecture}" not supported!')
 
     def _is_model_safetensors(self) -> bool:
         return Model.count_model_parts(self.dir_model, ".safetensors") > 0
@@ -218,6 +219,8 @@ class Model(ABC):
             return gguf.MODEL_ARCH.FALCON
         if arch == "RWForCausalLM" or arch == "LlamaForCausalLM":
             return gguf.MODEL_ARCH.LLAMA
+        if arch == "OPTForCausalLM":
+            return gguf.MODEL_ARCH.OPT
 
         raise NotImplementedError(f'Architecture "{arch}" not supported!')
 
